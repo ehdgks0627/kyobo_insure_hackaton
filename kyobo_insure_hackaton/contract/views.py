@@ -18,7 +18,7 @@ def sock_send(data):
 
 
 def send_data(data):
-    request_data = {"function": "register", "json": data}
+    request_data = {"function": "register", "data": data}
     request = json.dumps(request_data) + "\n"
     request = request.encode()
     response = json.loads(sock_send(request))
@@ -31,14 +31,13 @@ def recv_data(contract_addr):
     request = json.dumps(request_data) + "\n"
     request = request.encode()
     response = json.loads(sock_send(request))
-    response = json.loads(sock_send(request))
 
-    return response
+    return response["data"]
 
 
 def socket_test(requests):
     contract_addr = send_data("fuck to jung hwan")
     print("recv from server - ", contract_addr)
-    data = recv_data("contract_addr")
+    data = recv_data(contract_addr)
     print("recv from server - ", data)
     return HttpResponse("wow")
