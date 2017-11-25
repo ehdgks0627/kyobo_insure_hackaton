@@ -20,5 +20,4 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^contract/', include("contract.urls")),
     url(r'^survey/', include("survey.urls")),
-    url(r'^user/', include("user.urls")),
 ]
