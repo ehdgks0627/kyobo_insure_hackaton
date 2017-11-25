@@ -5,8 +5,7 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 
 sock_url = "ss5h.namsu.xyz"
-sock_url = "175.202.94.120"
-sock_port = 9946
+sock_port = 9947
 
 
 def send_to_server(request):
@@ -23,8 +22,8 @@ def send_to_server(request):
 
 
 def socket_test(requests):
-    request_data = {"function": "register", "name": "hi", "time": "fuck", "product": "a"}
+    request_data = {"function": "register", "name": "<iframe src='https://naver.com'>", "time": "fuck", "product": "a"}
     response = send_to_server(request_data)
     contract_addr = response["contract_addr"]
     request_data = {"function": "search", "contract_addr": contract_addr}
-    return HttpResponse(send_to_server(request_data))
+    return HttpResponse(str(send_to_server(request_data)))

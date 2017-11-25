@@ -1,10 +1,10 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
-from keras.models import Sequential
-from keras.layers.core import Dense, Activation
-from keras.optimizers import SGD
-import numpy as np
+#from keras.models import Sequential
+#from keras.layers.core import Dense, Activation
+#from keras.optimizers import SGD
+#import numpy as np
 
 
 @csrf_exempt
