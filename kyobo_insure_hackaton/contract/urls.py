@@ -15,8 +15,8 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from . import views
+from .views import *
 
 urlpatterns = [
-    
+    url(r'^test/$', socket_test),
 ]
