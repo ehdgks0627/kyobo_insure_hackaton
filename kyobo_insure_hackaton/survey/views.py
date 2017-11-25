@@ -17,8 +17,8 @@ for sex in ["1", "2"]:
         print("loaded %s %s" % (sex, age))
 
 '''APIJP002'''
-products = [["(무)교보프리미어종신보험Ⅲ", [10000, 211400]],
-            ["(무)교보미리미리CI보험 _ 필수특약有", [5000, 144240]]]
+products = [["(무)교보프리미어종신보험Ⅲ", [10000, 211400], "https://www.kyobo.co.kr/webdocs/view.jsp?screenId=SMMISNLM071"],
+        ["(무)교보미리미리CI보험 _ 필수특약有", [5000, 144240], "https://www.kyobo.co.kr/webdocs/view.jsp?screenId=SMMISNLM304"]]
 
 
 def translate(value, leftMin, leftMax, rightMin, rightMax):
@@ -76,8 +76,8 @@ def check_answer(requests):
         p = deepcopy(product)
         p[1].append(p[1][1] + (p[1][1] / 10.0) * (quality - 0.8))
         personal_product.append(p)
-
-    return HttpResponse(json.dumps({"product": str(personal_product), "quality": str(quality)}))
+    print(type(quality))
+    return HttpResponse(json.dumps({"product": personal_product, "quality": float(quality)}))
 
 
 # def TODO API 어떻게 쓸까요오오오오ㅗ
