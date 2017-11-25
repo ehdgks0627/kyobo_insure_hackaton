@@ -17,8 +17,8 @@ for sex in ["1", "2"]:
         print("loaded %s %s" % (sex, age))
 
 '''APIJP002'''
-products = [("(무)교보프리미어종신보험Ⅲ", (211400, 10000)),
-            ("(무)교보미리미리CI보험 _ 필수특약有", (144240, 5000))]
+products = [["(무)교보프리미어종신보험Ⅲ", [10000, 211400]],
+            ["(무)교보미리미리CI보험 _ 필수특약有", [5000, 144240]]]
 
 
 def translate(value, leftMin, leftMax, rightMin, rightMax):
@@ -58,27 +58,26 @@ def check_answer(requests):
     height = float(requests.POST.get("height"))
     weight = float(requests.POST.get("weight"))
     waist = float(requests.POST.get("waist"))
-    sight_left = float(requests.POST.get("sight_left"))
-    sight_right = float(requests.POST.get("sight_right"))
-    hear_left = float(requests.POST.get("hear_left"))
-    hear_right = float(requests.POST.get("hear_right"))
+    sight_left = float(requests.POST.get("sight_left", 1.0))
+    sight_right = float(requests.POST.get("sight_right", 1.0))
+    hear_left = float(requests.POST.get("hear_left", 1))
+    hear_right = float(requests.POST.get("hear_right", 1))
     bp_high = float(requests.POST.get("bp_high"))
     bp_lwst = float(requests.POST.get("bp_lwst"))
-    hmg = float(requests.POST.get("hmg", "16.00"))
+    hmg = float(requests.POST.get("hmg", 16.00))
     smk_stat_type_cd = float(requests.POST.get("smk_stat_type_cd"))
     drk_yn = float(requests.POST.get("drk_yn"))
-    quality = MODELS[sex][age].predict(np.asarray([
-        make_item([height, weight, waist, sight_left, sight_right, hear_left, hear_right, bp_high, bp_lwst, hmg,
-                   smk_stat_type_cd, drk_yn])]))[0]
+    item = make_item([height, weight, waist, sight_left, sight_right, hear_left, hear_right, bp_high, bp_lwst, hmg,smk_stat_type_cd, drk_yn])
+    print(item)
+    quality = MODELS[sex][age].predict(np.asarray([item]))[0][0]
     # TODO connect to model
-    quality = quality - 0.8
     personal_product = []
     for product in products:
         p = deepcopy(product)
-        p[0][1] = p[0][1] + (p[0][1] / 10.0) * quality
+        p[1].append(p[1][1] + (p[1][1] / 10.0) * (quality - 0.8))
         personal_product.append(p)
 
-    return HttpResponse(json.dumps({"product": personal_product, "quality": quality}))
+    return HttpResponse(json.dumps({"product": str(personal_product), "quality": str(quality)}))
 
 
 # def TODO API 어떻게 쓸까요오오오오ㅗ
