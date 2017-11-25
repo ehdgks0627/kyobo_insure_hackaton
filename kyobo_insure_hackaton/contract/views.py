@@ -1,6 +1,7 @@
 from django.shortcuts import render
 import json
 import socket
+import base64 as b64
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 
@@ -18,7 +19,7 @@ def sock_send(data):
 
 
 def send_data(data):
-    request_data = {"function": "register", "data": data}
+    request_data = {"function": "register", "data": b64.b64encode(data.encode()).decode()}
     request = json.dumps(request_data) + "\n"
     request = request.encode()
     response = json.loads(sock_send(request))
@@ -32,12 +33,21 @@ def recv_data(contract_addr):
     request = request.encode()
     response = json.loads(sock_send(request))
 
-    return response["data"]
+    return b64.b64decode(response["data"])
 
 
 def socket_test(requests):
-    contract_addr = send_data("fuck to jung hwan")
+    contract_addr = send_data(requests.GET.get("val"))
     print("recv from server - ", contract_addr)
     data = recv_data(contract_addr)
     print("recv from server - ", data)
-    return HttpResponse("wow")
+    return HttpResponse(contract_addr + " " + data)
+
+
+def new_contract(requests):
+    name = requests.POST.get("name")
+    ins_title = requests.POST.get("ins_title")
+    ins_fee = requests.POST.get("ins_fee")
+    ins_price = requests.POST.get("ins_price")
+    ins_saled_price = requests.POST.get("ins_saled_price")
+    return HttpResponse("aa")

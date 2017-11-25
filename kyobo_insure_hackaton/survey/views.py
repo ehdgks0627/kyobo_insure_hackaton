@@ -18,7 +18,7 @@ for sex in ["1", "2"]:
 
 '''APIJP002'''
 products = [["(무)교보프리미어종신보험Ⅲ", [10000, 211400], "https://www.kyobo.co.kr/webdocs/view.jsp?screenId=SMMISNLM071"],
-        ["(무)교보미리미리CI보험 _ 필수특약有", [5000, 144240], "https://www.kyobo.co.kr/webdocs/view.jsp?screenId=SMMISNLM304"]]
+            ["(무)교보미리미리CI보험 _ 필수특약有", [5000, 144240], "https://www.kyobo.co.kr/webdocs/view.jsp?screenId=SMMISNLM304"]]
 
 
 def translate(value, leftMin, leftMax, rightMin, rightMax):
@@ -67,7 +67,9 @@ def check_answer(requests):
     hmg = float(requests.POST.get("hmg", 16.00))
     smk_stat_type_cd = float(requests.POST.get("smk_stat_type_cd"))
     drk_yn = float(requests.POST.get("drk_yn"))
-    item = make_item([height, weight, waist, sight_left, sight_right, hear_left, hear_right, bp_high, bp_lwst, hmg,smk_stat_type_cd, drk_yn])
+    item = make_item(
+        [height, weight, waist, sight_left, sight_right, hear_left, hear_right, bp_high, bp_lwst, hmg, smk_stat_type_cd,
+         drk_yn])
     print(item)
     quality = MODELS[sex][age].predict(np.asarray([item]))[0][0]
     # TODO connect to model

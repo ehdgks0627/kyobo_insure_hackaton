@@ -19,4 +19,5 @@ from .views import *
 
 urlpatterns = [
     url(r'^test/$', socket_test),
+    url(r'^new_contract/$', new_contract)
 ]
