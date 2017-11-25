@@ -4,7 +4,9 @@ from django.views.decorators.csrf import csrf_exempt
 from keras.models import Sequential, load_model
 from keras.layers.core import Dense, Activation
 from keras.optimizers import SGD
+from copy import deepcopy
 import numpy as np
+import json
 
 # import numpy as np
 
@@ -14,16 +16,17 @@ for sex in ["1", "2"]:
         MODELS[sex][str(age)] = load_model("models/%s_%s_model.h5" % (sex, age))
         print("loaded %s %s" % (sex, age))
 
+'''APIJP002'''
+products = [("(무)교보프리미어종신보험Ⅲ", (211400, 10000)),
+            ("(무)교보미리미리CI보험 _ 필수특약有", (144240, 5000))]
+
 
 def translate(value, leftMin, leftMax, rightMin, rightMax):
-    # Figure out how 'wide' each range is
     leftSpan = leftMax - leftMin
     rightSpan = rightMax - rightMin
 
-    # Convert the left range into a 0-1 range (float)
     valueScaled = float(value - leftMin) / float(leftSpan)
 
-    # Convert the 0-1 range into a value in the right range.
     return rightMin + (valueScaled * rightSpan)
 
 
@@ -66,9 +69,16 @@ def check_answer(requests):
     drk_yn = float(requests.POST.get("drk_yn"))
     quality = MODELS[sex][age].predict(np.asarray([
         make_item([height, weight, waist, sight_left, sight_right, hear_left, hear_right, bp_high, bp_lwst, hmg,
-         smk_stat_type_cd, drk_yn])]))[0]
+                   smk_stat_type_cd, drk_yn])]))[0]
     # TODO connect to model
-    return HttpResponse(str(quality))
+    quality = quality - 0.8
+    personal_product = []
+    for product in products:
+        p = deepcopy(product)
+        p[0][1] = p[0][1] + (p[0][1] / 10.0) * quality
+        personal_product.append(p)
+
+    return HttpResponse(json.dumps({"product": personal_product, "quality": quality}))
 
 
 # def TODO API 어떻게 쓸까요오오오오ㅗ
