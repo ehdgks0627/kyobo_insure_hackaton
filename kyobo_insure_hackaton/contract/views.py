@@ -19,7 +19,7 @@ def sock_send(data):
 
 
 def send_data(data):
-    request_data = {"function": "register", "data": b64.b64encode(data.encode()).decode()}
+    request_data = {"function": "register", "data": b64.b64encode(data.encode("utf-8")).decode("utf-8")}
     request = json.dumps(request_data) + "\n"
     request = request.encode()
     response = json.loads(sock_send(request))
@@ -33,7 +33,7 @@ def recv_data(contract_addr):
     request = request.encode()
     response = json.loads(sock_send(request))
 
-    return b64.b64decode(response["data"])
+    return b64.b64decode(response["data"]).decode("utf-8")
 
 
 def socket_test(requests):
