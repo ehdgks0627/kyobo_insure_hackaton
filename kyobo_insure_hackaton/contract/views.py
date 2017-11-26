@@ -4,6 +4,7 @@ import socket
 import base64 as b64
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+from .models import *
 
 sock_url = "ss5h.namsu.xyz"
 sock_port = 9947
@@ -50,4 +51,11 @@ def new_contract(requests):
     ins_fee = requests.POST.get("ins_fee")
     ins_price = requests.POST.get("ins_price")
     ins_saled_price = requests.POST.get("ins_saled_price")
-    return HttpResponse("aa")
+
+    contract_addr = send_data(json.dumps(
+        {"name": name, "ins_title": ins_title, "ins_fee": ins_fee, "ins_price": ins_price,
+         "ins_saled_price": ins_saled_price}))
+
+    ContractLog.objects.create(name=name, ins_title=ins_title)
+
+    return HttpResponse(json.dumps({"status": "success"}))

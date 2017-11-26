@@ -18,6 +18,6 @@ from django.contrib import admin
 from .views import *
 
 urlpatterns = [
-    url(r'^test/$', socket_test),
+    url(r'^socket_test/$', socket_test),
     url(r'^new_contract/$', new_contract)
 ]
