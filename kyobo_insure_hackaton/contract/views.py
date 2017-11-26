@@ -7,7 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 from .models import *
 
 sock_url = "ss5h.namsu.xyz"
-sock_port = 9947
+sock_port = 9946
 
 
 def sock_send(data):
@@ -48,11 +48,13 @@ def contract_list(requests):
     contracts = ContractLog.objects.all()
     datas = []
     for contract in contracts:
-        contract_addr = contracts["contract_addr"]
-        datas.append(json.loads(recv_data(contract_addr)))
+        contract_addr = contract.contract_addr
+        fuck = json.loads(recv_data(contract_addr))
+        fuck["contract_addr"] = contract_addr
+        datas.append(fuck)
     for data in datas:
         print(data)
-    return HttpResponse("a")
+    return render(requests, "contract/viewTable.html", {"contractList": datas})
 
 @csrf_exempt
 def new_contract(requests):

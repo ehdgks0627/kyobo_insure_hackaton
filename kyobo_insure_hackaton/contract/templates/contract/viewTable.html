@@ -1,10 +1,62 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>계약 내용 조회</title>
+    <style>
+      table {
+          border-collapse: collapse;
+          text-align: left;
+          line-height: 1.5;
+      }
+      table thead th {
+          padding: 10px;
+          font-weight: bold;
+          vertical-align: top;
+          color: #369;
+          border-bottom: 3px solid #036;
+      }
+      table tbody th {
+          width: 150px;
+          padding: 10px;
+          font-weight: bold;
+          vertical-align: top;
+          border-bottom: 1px solid #ccc;
+          background: #f3f6f7;
+      }
+      table td {
+          width: 350px;
+          padding: 10px;
+          vertical-align: top;
+          border-bottom: 1px solid #ccc;
+      }
+    </style>
+  </head>
+  <body>
+    <table>
+        <thead>
+        <tr>
+            <th scope="cols">이름</th>
+            <th scope="cols">보험 이름</th>
+            <th scope="cols">보험 기본 가격</th>
+            <th scope="cols">보험 개인 가격</th>
+            <th scope="cols">가입료</th>
+            <th scope="cols">블록체인주소</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for contract in contractList %}
+        <tr>
+            <td>{{ contract.name }}</td>
+            <td>{{ contract.ins_title }}</td>
+            <td>{{ contract.ins_price }}</td>
+            <td>{{ contract.ins_saled_price }}</td>
+            <td>{{ contract.ins_fee }}</td>
+            <td>{{ contract.contract_addr }}</td>
+        </tr>
+        {% endfor%}
 
-</body>
+        </tbody>
+    </table>
+  </body>
 </html>
