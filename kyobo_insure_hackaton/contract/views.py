@@ -44,6 +44,16 @@ def socket_test(requests):
     print("recv from server - ", data)
     return HttpResponse(contract_addr + " " + data)
 
+def contract_list(requests):
+    contracts = ContractLog.objects.all()
+    datas = []
+    for contract in contracts:
+        contract_addr = contracts["contract_addr"]
+        datas.append(json.loads(recv_data(contract_addr)))
+    for data in datas:
+        print(data)
+    return HttpResponse("a")
+
 @csrf_exempt
 def new_contract(requests):
     name = requests.POST.get("name")

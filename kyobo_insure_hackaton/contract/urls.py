@@ -19,5 +19,6 @@ from .views import *
 
 urlpatterns = [
     url(r'^socket_test/$', socket_test),
-    url(r'^new_contract/$', new_contract)
+    url(r'^new_contract/$', new_contract),
+    url(r'^contract_list/$', contract_list),
 ]
