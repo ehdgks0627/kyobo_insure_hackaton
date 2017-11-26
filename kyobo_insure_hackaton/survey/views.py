@@ -18,7 +18,26 @@ for sex in ["1", "2"]:
 
 '''APIJP002'''
 products = [["(무)교보프리미어종신보험Ⅲ", [10000, 211400], "https://www.kyobo.co.kr/webdocs/view.jsp?screenId=SMMISNLM071"],
-            ["(무)교보미리미리CI보험 _ 필수특약有", [5000, 144240], "https://www.kyobo.co.kr/webdocs/view.jsp?screenId=SMMISNLM304"]]
+	["(무)교보미리미리CI보험 _ 필수특약有", [5000, 144240], "https://www.kyobo.co.kr/webdocs/view.jsp?screenId=SMMISNLM304"],
+	["(무)교보GI변액종신보험", [5000, 110000], "https://www.kyobo.co.kr/webdocs/view.jsp?screenId=SMMISNLM223"],
+	["(무)교보LTC종신보험(보증비용부과형)", [10000, 94240], "https://www.kyobo.co.kr/webdocs/view.jsp?screenId=SMMISNLM263"],
+	["멀티플랜 (무)교보변액유니버셜통합종신보험", [15000, 184240], "https://www.kyobo.co.kr/webdocs/view.jsp?screenId=SMMISNLM275"],
+	["(무)교보프리미어종신보험Ⅲ(보증비용부과형)", [5000, 144240], "https://www.kyobo.co.kr/webdocs/view.jsp?screenId=SMMISNLM071"],
+	["(무)교보New종신보험(보증비용부과형)", [5000, 144240], "https://www.kyobo.co.kr/webdocs/view.jsp?screenId=SMMISNLM292"],
+	["(무)교보알찬변액종신보험", [5000, 144240], "https://www.kyobo.co.kr/webdocs/view.jsp?screenId=SMMISNLM088"],
+	["(무)교보프라임변액종신보험(보증비용부과형)", [5000, 144240], "https://www.kyobo.co.kr/webdocs/view.jsp?screenId=SMMISNLM096"],
+	["(무)교보내게맞는종신보험(간편고지/보증비용부과형)", [5000, 144240], "https://www.kyobo.co.kr/webdocs/view.jsp?screenId=SMMISNLM145"],
+	["(무)교보하이브리드변액종신보험", [5000, 144240], "https://www.kyobo.co.kr/webdocs/view.jsp?screenId=SMMISNLM320"],
+	["(무) 교보플러스정기보험", [5000, 144240], "https://www.kyobo.co.kr/webdocs/view.jsp?screenId=SMMISNLM079"],
+	["(무)교보하이브리드VIP변액종신보험", [5000, 144240], "https://www.kyobo.co.kr/webdocs/view.jsp?screenId=SMMISNLM324"],
+	["(무)교보행복한준비보험(보증비용부과형)", [5000, 144240], "https://www.kyobo.co.kr/webdocs/view.jsp?screenId=SMMISNLM177"],
+	["(무)교보하나로케어종신보험Ⅱ(보증비용부과형)", [5000, 144240], "https://www.kyobo.co.kr/webdocs/view.jsp?screenId=SMMDINLM027"],
+	["(무)교보New종신보험(보증비용부과형)", [5000, 144240], "https://www.kyobo.co.kr/webdocs/view.jsp?screenId=SMMDINLM231"],
+	["(무)교보노블리에종신보험(보증비용부과형)", [5000, 144240], "https://www.kyobo.co.kr/webdocs/view.jsp?screenId=SMMISNLM109"],
+	["(무)교보내게맞는종신보험(간편고지/보증비용부과형)", [5000, 144240], "https://www.kyobo.co.kr/webdocs/view.jsp?screenId=SMMDINLM255"],
+	["(무)교보행복한준비보험(보증비용부과형)", [5000, 144240], "https://www.kyobo.co.kr/webdocs/view.jsp?screenId=SMMDINLM050"],
+	["(무)교보하나로정기보험", [5000, 144240], "https://www.kyobo.co.kr/webdocs/view.jsp?screenId=SMMDINLM032"],
+	["(무)교보여성이행복한정기보험", [5000, 144240], "https://www.kyobo.co.kr/webdocs/view.jsp?screenId=SMMDINLM251"]]
 
 
 def translate(value, leftMin, leftMax, rightMin, rightMax):
@@ -68,8 +87,8 @@ def check_answer(requests):
     smk_stat_type_cd = float(requests.POST.get("smk_stat_type_cd"))
     drk_yn = float(requests.POST.get("drk_yn"))
     item = make_item(
-        [height, weight, waist, sight_left, sight_right, hear_left, hear_right, bp_high, bp_lwst, hmg, smk_stat_type_cd,
-         drk_yn])
+	    [height, weight, waist, sight_left, sight_right, hear_left, hear_right, bp_high, bp_lwst, hmg, smk_stat_type_cd,
+		drk_yn])
     print(item)
     quality = MODELS[sex][age].predict(np.asarray([item]))[0][0]
     # TODO connect to model
@@ -100,4 +119,4 @@ def XORExample(request):
     model.compile(loss='mean_squared_error', optimizer=sgd, class_mode="binary")
     model.fit(X, y, nb_epoch=1000, batch_size=1)
     return HttpResponse(
-        str(val1) + " ^ " + str(val2) + " = " + ("1" if model.predict_proba(test_X)[0][0] > 0.5 else "0"))
+	    str(val1) + " ^ " + str(val2) + " = " + ("1" if model.predict_proba(test_X)[0][0] > 0.5 else "0"))
