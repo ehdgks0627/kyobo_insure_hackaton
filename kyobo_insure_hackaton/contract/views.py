@@ -44,7 +44,7 @@ def socket_test(requests):
     print("recv from server - ", data)
     return HttpResponse(contract_addr + " " + data)
 
-
+@csrf_exempt
 def new_contract(requests):
     name = requests.POST.get("name")
     ins_title = requests.POST.get("ins_title")
@@ -56,6 +56,6 @@ def new_contract(requests):
         {"name": name, "ins_title": ins_title, "ins_fee": ins_fee, "ins_price": ins_price,
          "ins_saled_price": ins_saled_price}))
 
-    ContractLog.objects.create(name=name, ins_title=ins_title)
+    ContractLog.objects.create(name=name, contract_addr=contract_addr)
 
     return HttpResponse(json.dumps({"status": "success"}))
